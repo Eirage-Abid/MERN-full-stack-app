@@ -1,61 +1,47 @@
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
-
-const schema = yup.object({
-  name: yup.string().required('Name is required'),
-  email: yup
-    .string()
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: yup
-    .string()
-    .min(6, 'Password must be at least 6 characters')
-    .required('Password is required'),
-})
+import React, { useState } from 'react'
+import { useAuth } from '../../app/authContext'
 
 const SignupPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  })
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const { signup } = useAuth()
 
-  const onSubmit = (data) => {
-    console.log('Signup Data:', data)
-    // You can call your signup API here with the form data
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    await signup(name, email, password)
   }
 
   return (
     <div>
       <h2>Signup</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>Name:</label>
           <input
             type="text"
-            {...register('name')}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
           />
-          {errors.name && <p>{errors.name.message}</p>}
         </div>
         <div>
           <label>Email:</label>
           <input
             type="email"
-            {...register('email')}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
           />
-          {errors.email && <p>{errors.email.message}</p>}
         </div>
         <div>
           <label>Password:</label>
           <input
             type="password"
-            {...register('password')}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
           />
-          {errors.password && <p>{errors.password.message}</p>}
         </div>
         <button type="submit">Sign Up</button>
       </form>
