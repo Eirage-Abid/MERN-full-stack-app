@@ -13,9 +13,9 @@ import { errorHandler, notFound } from './middleware/error.js';
 const app = express();
 
 
-// CORS — allow Vite dev origin
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
-app.use(cors({ origin: CLIENT_ORIGIN, credentials: true }));
+// CORS — allow Vite dev origins
+const CLIENT_ORIGINS = process.env.CLIENT_ORIGIN ? process.env.CLIENT_ORIGIN.split(',') : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175'];
+app.use(cors({ origin: CLIENT_ORIGINS, credentials: true }));
 
 
 app.use(helmet());

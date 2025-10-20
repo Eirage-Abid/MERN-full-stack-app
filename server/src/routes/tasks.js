@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import Task from '../models/Task.js';
-import { requireRole } from '../middleware/auth.js';
+import { verifyAccess, requireRole } from '../middleware/auth.js';
 
 const router = Router();
+
+// Apply authentication middleware to all routes
+router.use(verifyAccess);
 
 router.get('/', async (req, res) => {
   const page = Math.max(parseInt(req.query.page) || 1, 1);
