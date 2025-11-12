@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently -k \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
     "start": "npm --prefix server start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +18,9 @@
     "dotenv": "^17.2.3",
     "react-hook-form": "^7.65.0",
     "yup": "^1.7.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0"
   }
 }
